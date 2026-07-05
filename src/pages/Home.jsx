@@ -5,9 +5,8 @@ import products, { POPULAR_GAME_IDS } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import content from "../config/content";
 
-// PLACEHOLDER: set this to an image path (e.g. "/hero.jpg" from /public)
-// or a full URL to replace the hero placeholder box below.
-const HERO_IMAGE = null;
+// Homepage hero photo (from /public/hero.jpg). Swap the path here to change it.
+const HERO_IMAGE = "/hero.jpg";
 
 export default function Home() {
   const deals = products.filter((p) => p.discount > 0).slice(0, 3);

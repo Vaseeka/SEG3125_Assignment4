@@ -6,6 +6,10 @@ import ProductCard from "../components/ProductCard";
 import FacetedSidebar from "../components/FacetedSidebar";
 import content from "../config/content";
 
+function effectivePriceOf(p) {
+  return p.discount ? p.price * (1 - p.discount / 100) : p.price;
+}
+
 const PAGE_SIZE = 6;
 
 export default function Shop() {
@@ -21,16 +25,18 @@ export default function Shop() {
   const [page, setPage] = useState(1);
 
   const filtered = useMemo(() => {
-    return products.filter((p) => {
-      if (filters.publisher.size && !p.publisher.some((v) => filters.publisher.has(v))) return false;
-      if (filters.franchise.size && !filters.franchise.has(p.franchise)) return false;
-      if (filters.genre.size && !p.genre.some((v) => filters.genre.has(v))) return false;
-      if (filters.players.size && !p.players.some((v) => filters.players.has(v))) return false;
-      const effectivePrice = p.discount ? p.price * (1 - p.discount / 100) : p.price;
-      if (effectivePrice > filters.maxPrice) return false;
-      if (filters.onSale && !(p.discount > 0)) return false;
-      return true;
-    });
+    return products
+      .filter((p) => {
+        if (filters.publisher.size && !p.publisher.some((v) => filters.publisher.has(v))) return false;
+        if (filters.franchise.size && !filters.franchise.has(p.franchise)) return false;
+        if (filters.genre.size && !p.genre.some((v) => filters.genre.has(v))) return false;
+        if (filters.players.size && !p.players.some((v) => filters.players.has(v))) return false;
+        const effectivePrice = effectivePriceOf(p);
+        if (effectivePrice > filters.maxPrice) return false;
+        if (filters.onSale && !(p.discount > 0)) return false;
+        return true;
+      })
+      .sort((a, b) => effectivePriceOf(a) - effectivePriceOf(b));
   }, [filters]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));

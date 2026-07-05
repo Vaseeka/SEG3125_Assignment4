@@ -52,17 +52,28 @@ export default function ProductCard({ product, filters, onToggleFacet }) {
   return (
     <Card className="card-elevated h-100">
       {product.image ? (
-        <img
-          src={product.image}
-          alt={product.name}
-          style={{ height: 150, width: "100%", objectFit: "cover" }}
-        />
+        <div
+          style={{
+            height: 300,
+            width: "100%",
+            backgroundColor: "var(--color-surface-alt)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={product.image}
+            alt={product.name}
+            style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
+          />
+        </div>
       ) : (
         <div
           style={{
             backgroundColor: headerColorFor(product),
             color: "#fff",
-            height: 150,
+            height: 300,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
