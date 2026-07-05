@@ -74,11 +74,11 @@ export default function ConfirmationStep({ order }) {
 
     <p className="text-muted small text-center mt-4 mb-2">{t.beforeYouGo}</p>
 
-    <div className="d-flex justify-content-center gap-3 mt-2 flex-wrap">
-      <Button as={Link} to="/" className="btn-outline-brand px-4">
+    <div className="d-flex flex-row justify-content-center align-items-center gap-3 mt-2">
+      <Button as={Link} to="/" className="btn-outline-brand px-4 text-nowrap">
         {t.goHome}
       </Button>
-      <Button as={Link} to="/feedback" className="btn-brand px-4">
+      <Button as={Link} to="/feedback" className="btn-brand px-4 text-nowrap">
         {t.fillSurvey}
       </Button>
     </div>

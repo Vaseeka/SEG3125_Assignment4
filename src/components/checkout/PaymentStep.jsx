@@ -186,7 +186,7 @@ export default function PaymentStep({ onSubmit, onBack, onCancel }) {
         show={showPayConfirm}
         title="Confirm payment"
         message={`You're about to pay $${total.toFixed(2)} for your order.`}
-        emphasis="This payment cannot be undone once confirmed so make sure everything looks right."
+        emphasis="This payment cannot be undone once confirmed so make sure everything is correct."
         confirmText="I'm ready to pay now"
         cancelText="I need to look over my order"
         onConfirm={() => {

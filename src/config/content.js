@@ -34,7 +34,7 @@ export const content = {
 
   shop: {
     title: "Browse our game collection",
-    body: "Select filters from different categories to reduce your search results.",
+    body: "Select filters from different categories to reduce your search results. Results are sorted by price in ascending order (low to high).",
     filtersTitle: "Filters",
     clearAll: "Clear all",
     publisher: "Publisher",
@@ -85,7 +85,7 @@ export const content = {
     checkout: "Continue to checkout",
 
     details: {
-      title: "Your details",
+      title: "Your info",
       firstName: "First name",
       lastName: "Last name",
       email: "Email",

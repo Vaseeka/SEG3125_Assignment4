@@ -21,7 +21,7 @@ function capitalizeWords(raw) {
   return raw.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-export default function DetailsStep({ details, onSubmit, onBack, onCancel }) {
+export default function DetailsStep({ details, onSubmit, onChange, onBack, onCancel }) {
   const [form, setForm] = useState(details || EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [showBackConfirm, setShowBackConfirm] = useState(false);
@@ -36,7 +36,9 @@ export default function DetailsStep({ details, onSubmit, onBack, onCancel }) {
     form.postal.trim();
 
   function update(field, value) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    const next = { ...form, [field]: value };
+    setForm(next);
+    onChange?.(next);
   }
 
   function validate() {

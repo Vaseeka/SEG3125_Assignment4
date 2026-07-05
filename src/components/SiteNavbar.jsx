@@ -73,11 +73,7 @@ export default function SiteNavbar() {
             <div className="position-relative">
               <IconTip
                 id="tip-cart"
-                text={
-                  itemCount > 0
-                    ? "View the games in your cart and start the checkout process here"
-                    : "Click here when you're ready to checkout your games"
-                }
+                text="View the games in your cart and start the checkout process here"
               >
                 <Nav.Link as={NavLink} to="/cart" className={linkClass}>
                   <span className={"position-relative" + (bounce ? " cart-pop" : "")}>
@@ -96,7 +92,7 @@ export default function SiteNavbar() {
                   {content.nav.cart}
                 </Nav.Link>
               </IconTip>
-              {showBubble && <div className="cart-bubble">Click here when you're ready to checkout your games</div>}
+              {showBubble && <div className="cart-bubble">Click the shopping cart icon when you're ready to checkout the game you selected</div>}
             </div>
           </Nav>
         </Navbar.Collapse>

@@ -46,6 +46,7 @@ export default function Cart() {
             <DetailsStep
               details={details}
               onSubmit={handleDetailsSubmit}
+              onChange={setDetails}
               onBack={() => setStep(0)}
               onCancel={() => setShowCancelConfirm(true)}
             />
@@ -64,7 +65,7 @@ export default function Cart() {
       <ConfirmModal
         show={showCancelConfirm}
         message="Are you sure you want to cancel your order?"
-        emphasis="You'll have to resume the checkout process from the info step if you return."
+        emphasis="None of the info you entered will be saved except the games in your cart."
         confirmText="Yes, I'll cancel my order"
         cancelText="No, I changed my mind"
         onConfirm={handleCancelConfirmed}
