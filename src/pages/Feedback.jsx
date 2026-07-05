@@ -42,7 +42,7 @@ export default function Feedback({ draft, onSaveDraft, onSubmitted }) {
 
   return (
     <Container fluid="lg" className="py-4" style={{ maxWidth: 700 }}>
-      <h2 className="fw-bold mb-4 text-center">{content.feedback.title}</h2>
+      <h2 className="fw-bold mb-4 text-left">{content.feedback.title}</h2>
       <Card className="card-elevated p-4">
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-4">
