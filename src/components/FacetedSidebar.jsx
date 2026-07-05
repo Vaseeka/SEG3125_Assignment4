@@ -46,7 +46,7 @@ export default function FacetedSidebar({ filters, setFilters, minPrice, maxPrice
     activeTags.push({ facet: "maxPrice", value: `Under $${filters.maxPrice}` });
   }
   if (filters.onSale) {
-    activeTags.push({ facet: "onSale", value: "On sale" });
+    activeTags.push({ facet: "onSale", value: "Deals" });
   }
 
   function removeTag(t) {
@@ -94,7 +94,7 @@ export default function FacetedSidebar({ filters, setFilters, minPrice, maxPrice
       <Form.Check
         type="checkbox"
         id="filter-onsale"
-        label="On sale only"
+        label="Deals"
         checked={filters.onSale}
         onChange={() => setFilters((prev) => ({ ...prev, onSale: !prev.onSale }))}
         className="mb-3"

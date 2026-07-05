@@ -18,11 +18,11 @@ export const content = {
     dealsTitle: "Looking for some ",
     dealsHighlight: "good deals?",
     popularTitle: "Checkout some of our ",
-    popularHighlight: "most popular games",
+    popularHighlight: "most popular games!",
     feedbackBanner: {
       title: "Enjoying your stay?",
-      body: "We would love to hear about your experience so we can improve our site!",
-      cta: "Fill out our feedback form",
+      body: "We'd love to hear about your experience using our site so we can further improve it.",
+      cta: "Fill out our survey now",
     },
     contact: {
       title: "Have any questions?",
@@ -34,6 +34,7 @@ export const content = {
 
   shop: {
     title: "Browse our game collection",
+    body: "Select filters from different categories to reduce your search results.",
     filtersTitle: "Filters",
     clearAll: "Clear all",
     publisher: "Publisher",
@@ -43,37 +44,37 @@ export const content = {
     maxPrice: "Max price",
     addToCart: "Add to cart",
     resultsLabel: (start, end, total) =>
-      total === 0 ? "No results" : `Showing ${start}-${end} of ${total} results`,
+      total === 0 ? "No results found" : `Showing ${start}-${end} of ${total} results`,
   },
 
   feedback: {
     title: "Share your experience with us",
     howDidYouFind: "How did you find us?",
     howDidYouFindOptions: [
-      "Search engine",
-      "Social media",
-      "Friend or family",
-      "Advertisement",
-      "Other",
+      "I searched online",
+      "I found you through social media",
+      "I was told by a friend/family member",
+      "I saw your advertisement",
+      "I found you another way",
     ],
     easeQuestion: "How easy was it to find what you wanted?",
     ratingQuestion: "How would you rate your overall experience?",
-    commentsLabel: "Anything else you'd like to share?",
+    commentsLabel: "Anything else you'd like to share with us?",
     commentsPlaceholder:
-      "What did you like? What game are we missing? We'd love to hear it all!",
-    later: "I'll fill it out later",
+      "What did you like? What games are we missing? We'd love to hear it!",
+    later: "I'll tell you later",
     submit: "I'm ready to submit",
     thanks: {
-      title: "We've received your feedback!",
-      body: "Thank you for taking the time to fill out our survey.",
-      cta: "Go to home",
+      title: "We got your feedback!",
+      body: "Thank you for taking the time to fill out our survey. We hope to see you soon!",
+      cta: "Go to homepage",
     },
   },
 
   cart: {
-    steps: ["Cart", "Details", "Payment", "Done!"],
+    steps: ["Cart", "Your Info", "Payment", "Done!"],
     title: "Your cart",
-    emptyMessage: "Your cart is empty — go find your next favourite game!",
+    emptyMessage: "Your cart is currently empty. Add a game from our shop to fill your cart.",
     orderSummary: "Order summary",
     subtotal: "Subtotal",
     shipping: "Shipping",
@@ -81,22 +82,22 @@ export const content = {
     totalDue: "Total due",
     goBack: "Go back",
     cancel: "Cancel",
-    checkout: "Proceed to checkout",
+    checkout: "Continue to checkout",
 
     details: {
       title: "Your details",
       firstName: "First name",
       lastName: "Last name",
       email: "Email",
-      address: "Street address",
+      address: "Address",
       city: "City",
-      postal: "Postal / ZIP",
+      postal: "Postal code",
       continue: "Continue to payment",
     },
 
     payment: {
       title: "Payment",
-      secureNote: "Secure payment — card details are not stored",
+      secureNote: "Secure payment (your card info is not saved)",
       nameOnCard: "Name on card",
       cardNumber: "Card number",
       expiry: "Expiry (MM/YY)",
@@ -105,24 +106,24 @@ export const content = {
     },
 
     confirmation: {
-      title: "Order confirmed!",
+      title: "We got your order!",
       body: (orderId) =>
-        `Your order ${orderId} is confirmed. We'll send a shipping update to your email shortly!`,
+        `Your order ${orderId} is confirmed. We'll send a shipping update to your email shortly.`,
       purchaseDetails: "Purchase details",
-      whatsNext: "What happens next",
+      whatsNext: "What happens next?",
       steps: [
-        "Your games are packed and ready to ship",
+        "Your game(s) are packed and ready to ship",
         "You'll receive a tracking number by email",
-        "Estimated delivery: 3-5 business days",
+        "You're game will arrive in 3-5 business days",
       ],
-      beforeYouGo: "Before you go — we'd love to hear about your experience! It takes less than 2 minutes.",
-      goHome: "Go to home",
-      fillSurvey: "Fill out survey",
+      beforeYouGo: "Before you go, we'd love to hear about your experience shopping with us! Fill out our quick survey and share your thoughts. It takes less than 2 minutes.",
+      goHome: "No, I'd like to go to the homepage",
+      fillSurvey: "Yes, I'd like to share some feedback",
     },
   },
 
   footer: {
-    tagline: "Your trusted stop for pre-loved Nintendo DS games.",
+    tagline: "At New Sale we believe everyone should have the chance to experience the ageless classics",
   },
 
   shippingCost: 5.99,

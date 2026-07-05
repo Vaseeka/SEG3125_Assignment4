@@ -68,7 +68,7 @@ export default function Home() {
                 state={{ onSaleOnly: true }}
                 className="btn-brand px-3"
               >
-                See other deals <BsArrowRight />
+                See our other deals <BsArrowRight />
               </Button>
             </div>
             <Row className="g-4">

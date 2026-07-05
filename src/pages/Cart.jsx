@@ -64,9 +64,9 @@ export default function Cart() {
       <ConfirmModal
         show={showCancelConfirm}
         message="Are you sure you want to cancel your order?"
-        emphasis="Your cart will be saved, but you'll need to restart checkout from the details step."
-        confirmText="Yes, cancel order"
-        cancelText="No, keep going"
+        emphasis="You'll have to resume the checkout process from the info step if you return."
+        confirmText="Yes, I'll cancel my order"
+        cancelText="No, I changed my mind"
         onConfirm={handleCancelConfirmed}
         onCancel={() => setShowCancelConfirm(false)}
       />

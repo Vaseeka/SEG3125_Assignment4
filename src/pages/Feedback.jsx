@@ -106,10 +106,10 @@ export default function Feedback({ draft, onSaveDraft, onSubmitted }) {
 
       <ConfirmModal
         show={showLeaveConfirm}
-        message="You've already started filling out this survey."
-        emphasis="We'll save a draft of your answers so you can pick up right where you left off."
-        confirmText="Save draft & leave"
-        cancelText="Keep filling it out"
+        message="You've already started filling out our survey. Are you sure you want to go back to the homepage?"
+        emphasis="A draft of your answers will be saved for when you return."
+        confirmText="Yes, I'll go back to the homepage"
+        cancelText="No, I'll stay here"
         onConfirm={confirmLeaveAndSaveDraft}
         onCancel={() => setShowLeaveConfirm(false)}
       />

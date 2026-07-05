@@ -47,7 +47,7 @@ export const facetOptions = {
 export const PRICE_MIN = 10;
 export const PRICE_MAX = 30;
 
-// Fixed picks for homepage sections, referenced by id above.
+// Games listed in popular games section on the homepage
 export const POPULAR_GAME_IDS = ["sm64", "ct", "ksu"]; // Super Mario 64 DS, Chrono Trigger, Kirby Super Star Ultra
 
 export default products;

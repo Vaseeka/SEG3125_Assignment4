@@ -6,7 +6,7 @@ import content from "../../config/content";
 
 const EMPTY_FORM = { firstName: "", lastName: "", email: "", address: "", city: "", postal: "" };
 
-// Auto-format postal/zip code
+// Auto-format postal code
 function formatPostal(raw) {
   const cleaned = raw.toUpperCase().replace(/\s+/g, "");
   const looksCanadian = /^[A-Z]\d[A-Z]/.test(cleaned);
@@ -158,9 +158,9 @@ export default function DetailsStep({ details, onSubmit, onBack, onCancel }) {
       <ConfirmModal
         show={showBackConfirm}
         message="Are you sure you want to go back to your cart?"
-        emphasis="The details you've entered here will be saved for when you return."
-        confirmText="Yes, go back"
-        cancelText="No, stay here"
+        emphasis="The info you've entered here will be saved for when you return."
+        confirmText="Yes, I'll go back to my cart"
+        cancelText="No, I'll stay here"
         onConfirm={() => {
           setShowBackConfirm(false);
           onBack();

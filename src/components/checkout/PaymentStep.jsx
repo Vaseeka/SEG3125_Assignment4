@@ -171,10 +171,10 @@ export default function PaymentStep({ onSubmit, onBack, onCancel }) {
 
       <ConfirmModal
         show={showBackConfirm}
-        message="Are you sure you want to go back and edit your details?"
-        emphasis="Your payment information will need to be re-entered."
-        confirmText="Yes, go back"
-        cancelText="No, stay here"
+        message="Are you sure you want to go back and edit your personal information?"
+        emphasis="Your payment information will not be saved and will need to be re-entered when you return."
+        confirmText="Yes, I'll go back"
+        cancelText="No, I'll stay here"
         onConfirm={() => {
           setShowBackConfirm(false);
           onBack();
@@ -186,9 +186,9 @@ export default function PaymentStep({ onSubmit, onBack, onCancel }) {
         show={showPayConfirm}
         title="Confirm payment"
         message={`You're about to pay $${total.toFixed(2)} for your order.`}
-        emphasis="Make sure everything looks right — this can't be undone once submitted."
-        confirmText="Yes, pay now"
-        cancelText="No, let me check"
+        emphasis="This payment cannot be undone once confirmed so make sure everything looks right."
+        confirmText="I'm ready to pay now"
+        cancelText="I need to look over my order"
         onConfirm={() => {
           setShowPayConfirm(false);
           onSubmit(form);

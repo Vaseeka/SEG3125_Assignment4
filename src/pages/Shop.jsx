@@ -64,6 +64,7 @@ export default function Shop() {
   return (
     <Container fluid="lg" className="py-4">
       <h2 className="fw-bold mb-4">{content.shop.title}</h2>
+      <p className="mb-4">{content.shop.body}</p>
       <Row className="g-4">
         <Col md={3}>
           <FacetedSidebar

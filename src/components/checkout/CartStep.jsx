@@ -12,7 +12,7 @@ export default function CartStep({ onNext }) {
       <div className="text-center py-5">
         <p className="text-muted mb-3">{content.cart.emptyMessage}</p>
         <Button as={Link} to="/shop" className="btn-brand px-4">
-          Browse the shop <BsArrowRight />
+          Start shopping <BsArrowRight />
         </Button>
       </div>
     );

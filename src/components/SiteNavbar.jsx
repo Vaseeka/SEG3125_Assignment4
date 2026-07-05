@@ -55,17 +55,17 @@ export default function SiteNavbar() {
         <Navbar.Toggle aria-controls="main-nav" />
         <Navbar.Collapse id="main-nav">
           <Nav className="ms-auto align-items-md-center gap-md-4 gap-2">
-            <IconTip id="tip-home" text="Back to the homepage">
+            <IconTip id="tip-home" text="Go back to our homepage here">
               <Nav.Link as={NavLink} to="/" end className={linkClass}>
                 <BsHouseDoorFill size={16} /> {content.nav.home}
               </Nav.Link>
             </IconTip>
-            <IconTip id="tip-shop" text="Browse all DS games">
+            <IconTip id="tip-shop" text="Browse our DS game collection here">
               <Nav.Link as={NavLink} to="/shop" className={linkClass}>
                 <BsBagFill size={16} /> {content.nav.shop}
               </Nav.Link>
             </IconTip>
-            <IconTip id="tip-feedback" text="Share your experience">
+            <IconTip id="tip-feedback" text="Share your experience here">
               <Nav.Link as={NavLink} to="/feedback" className={linkClass}>
                 <BsChatSquareTextFill size={16} /> {content.nav.feedback}
               </Nav.Link>
@@ -75,8 +75,8 @@ export default function SiteNavbar() {
                 id="tip-cart"
                 text={
                   itemCount > 0
-                    ? "Your cart holds your items — click here to checkout"
-                    : "Your cart holds your items — click here when you're ready to checkout"
+                    ? "View the games in your cart and start the checkout process here"
+                    : "Click here when you're ready to checkout your games"
                 }
               >
                 <Nav.Link as={NavLink} to="/cart" className={linkClass}>
@@ -96,7 +96,7 @@ export default function SiteNavbar() {
                   {content.nav.cart}
                 </Nav.Link>
               </IconTip>
-              {showBubble && <div className="cart-bubble">Click here to checkout your items!</div>}
+              {showBubble && <div className="cart-bubble">Click here when you're ready to checkout your games</div>}
             </div>
           </Nav>
         </Navbar.Collapse>
