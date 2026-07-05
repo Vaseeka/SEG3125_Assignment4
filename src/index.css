@@ -1,0 +1,216 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  /* These are overwritten at runtime from src/config/theme.js via ThemeProvider,
+     but sensible defaults live here too so the app still looks right
+     even before JS runs. Edit src/config/theme.js — not this file — to
+     change colours. */
+  --color-primary: #E23744;
+  --color-primary-dark: #B92835;
+  --color-primary-light: #FCE8EA;
+  --color-dark: #121212;
+  --color-dark-soft: #1E1E1E;
+  --color-accent: #D96B00;
+  --color-accent-dark: #B85900;
+  --color-surface: #F4F4F4;
+  --color-surface-alt: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-text-muted: #6B6B6B;
+  --color-text-on-dark: #FFFFFF;
+  --color-success: #3BAA5C;
+  --color-warning: #F5C344;
+  --color-border: #E4E4E4;
+
+  --font-heading: 'Poppins', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4, h5, .font-heading {
+  font-family: var(--font-heading);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.btn-brand {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+}
+.btn-brand:hover,
+.btn-brand:focus {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: #fff;
+}
+.btn-brand:disabled {
+  background-color: var(--color-border);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.btn-outline-brand {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+}
+.btn-outline-brand:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.text-brand {
+  color: var(--color-primary);
+}
+
+.bg-brand-dark {
+  background-color: var(--color-dark);
+}
+
+.pill-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  margin-right: 4px;
+}
+
+.card-elevated {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-elevated:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.step-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: var(--color-border);
+  color: var(--color-text-muted);
+}
+.step-circle.active,
+.step-circle.done {
+  background: var(--color-primary);
+  color: #fff;
+}
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border);
+  margin: 0 6px;
+}
+.step-line.done {
+  background: var(--color-primary);
+}
+.step-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+.step-label.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-accent);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.qty-stepper button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  font-weight: 700;
+}
+.qty-stepper span {
+  color: #fff;
+  font-weight: 600;
+  min-width: 28px;
+  text-align: center;
+  cursor: text;
+}
+.qty-stepper input {
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  width: 36px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.navbar-icon-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-on-dark) !important;
+}
+.navbar-icon-link.active {
+  color: var(--color-primary) !important;
+}
+
+.star-rating svg {
+  cursor: pointer;
+}
+
+.hero-section {
+  background-color: var(--color-dark);
+  color: var(--color-text-on-dark);
+}
+
+.faceted-sidebar {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.badge-discount {
+  background-color: var(--color-warning);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
