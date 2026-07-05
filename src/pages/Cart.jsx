@@ -37,10 +37,10 @@ export default function Cart() {
   return (
     <Container fluid="lg" className="py-4">
       <CheckoutStepper step={step} />
-      {step === 0 && <h2 className="fw-bold mb-4">{content.cart.title}</h2>}
 
       <div className="d-flex justify-content-center">
         <div style={{ width: "100%", maxWidth: step === 0 ? 1100 : 640 }}>
+          {step === 0 && <h2 className="fw-bold mb-4">{content.cart.title}</h2>}
           {step === 0 && <CartStep onNext={() => setStep(1)} />}
           {step === 1 && (
             <DetailsStep

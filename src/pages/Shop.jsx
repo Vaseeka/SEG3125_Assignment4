@@ -26,7 +26,8 @@ export default function Shop() {
       if (filters.franchise.size && !filters.franchise.has(p.franchise)) return false;
       if (filters.genre.size && !p.genre.some((v) => filters.genre.has(v))) return false;
       if (filters.players.size && !p.players.some((v) => filters.players.has(v))) return false;
-      if (p.price > filters.maxPrice) return false;
+      const effectivePrice = p.discount ? p.price * (1 - p.discount / 100) : p.price;
+      if (effectivePrice > filters.maxPrice) return false;
       if (filters.onSale && !(p.discount > 0)) return false;
       return true;
     });
