@@ -1,17 +1,3 @@
-// ============================================================
-// PRODUCT CATALOG
-// `discount` is a percentage off `price` (0 = not on sale).
-// `genre`, `players`, and `publisher` are arrays so a game can
-// belong to more than one facet value (co-published titles,
-// multi-genre games). The faceted search matches a filter if
-// ANY of a game's values in that facet overlap the selection.
-//
-// TO ADD BOX ART: add an `image` field to any product below,
-// e.g. `image: "/games/nsmb.jpg"` (put the file in /public/games/
-// and reference it as "/games/nsmb.jpg"), or a full URL. Cards
-// without an `image` field show a placeholder box automatically.
-// ============================================================
-
 export const products = [
   // ── Mario ──
   { id: "nsmb", image: "/games/nsmb.png", code: "NSMB", name: "New Super Mario Bros.", franchise: "Mario", publisher: ["Nintendo"], genre: ["Action", "Platformer"], players: ["Single Player", "Multiplayer"], price: 29.99, discount: 30 },

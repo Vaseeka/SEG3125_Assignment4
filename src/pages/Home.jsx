@@ -5,7 +5,7 @@ import products, { POPULAR_GAME_IDS } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import content from "../config/content";
 
-// Homepage hero photo (from /public/hero.jpg). Swap the path here to change it.
+// Homepage photo of DS and game cartridges
 const HERO_IMAGE = "/hero.jpg";
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero */}
+      {/* Main */}
       <section className="hero-section py-5">
         <Container fluid="lg">
           <Row className="align-items-center g-4">
@@ -44,7 +44,6 @@ export default function Home() {
                   }}
                   className="d-flex flex-column align-items-center justify-content-center text-white fw-bold gap-2"
                 >
-                  {/* PLACEHOLDER: set HERO_IMAGE above to replace this box with a photo */}
                   <BsImage size={26} style={{ opacity: 0.6 }} />
                   <span>ADD HERO IMAGE</span>
                 </div>
@@ -97,7 +96,7 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Feedback banner — centered text, no image */}
+      {/* Feedback */}
       <section className="bg-brand-dark text-white py-5">
         <Container fluid="lg" className="text-center">
           <div className="mx-auto" style={{ maxWidth: 560 }}>

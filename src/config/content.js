@@ -1,9 +1,3 @@
-// ============================================================
-// CONTENT CONFIG
-// All user-facing copy lives here so it's easy to rewrite
-// without touching component code. Organised by page/section.
-// ============================================================
-
 export const content = {
   siteName: "New Sale",
 

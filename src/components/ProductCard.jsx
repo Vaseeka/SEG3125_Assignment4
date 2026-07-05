@@ -5,14 +5,13 @@ import { useCart } from "../context/CartContext";
 import content from "../config/content";
 
 function headerColorFor(product) {
-  // Alternate header colours by publisher, purely visual grouping.
   if (product.publisher.includes("Sega")) return "var(--color-primary-dark)";
   if (product.publisher.includes("Square Enix") && !product.publisher.includes("Nintendo")) return "#2E7DD1";
   return "var(--color-primary)";
 }
 
 // Builds the full list of facet tags this card should display:
-// franchise, every publisher, every genre, every player-count value.
+// franchise, every publisher, every genre, every player-count value
 function buildTags(product) {
   return [
     { facet: "franchise", value: product.franchise },
@@ -81,8 +80,7 @@ export default function ProductCard({ product, filters, onToggleFacet }) {
             gap: 4,
           }}
         >
-          {/* PLACEHOLDER: set `image` on this product in src/data/products.js
-              (e.g. image: "/games/nsmb.jpg") to replace this box with box art. */}
+
           <BsImage size={22} style={{ opacity: 0.6 }} />
           <div className="fw-bold fs-5">{product.code}</div>
           <div style={{ fontSize: "0.65rem", letterSpacing: 1, opacity: 0.7 }}>

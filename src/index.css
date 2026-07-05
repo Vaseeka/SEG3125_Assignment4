@@ -1,10 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap");
 
 :root {
-  /* These are overwritten at runtime from src/config/theme.js via ThemeProvider,
-     but sensible defaults live here too so the app still looks right
-     even before JS runs. Edit src/config/theme.js — not this file — to
-     change colours. */
+  /* Colours here are overwritten at runtime with colours listed in src/config/theme.js */
   --color-primary: #E23744;
   --color-primary-dark: #B92835;
   --color-primary-light: #FCE8EA;
@@ -84,7 +81,7 @@ a {
   color: var(--color-primary-dark);
 }
 
-/* "Add to cart" — grey scheme matching the unselected/"matched" filter tags */
+/* Changed "Add to cart" grey scheme to match the unselected/"matched" filter tags */
 .btn-cart {
   background-color: var(--color-border);
   border-color: var(--color-border);
@@ -99,8 +96,8 @@ a {
   color: var(--color-text);
 }
 
-/* Kill Bootstrap's default blue focus/active flash on every button,
-   regardless of variant, and keep our own colours on :active */
+/* Remove the ugly blue flash on highlight that boostrap has by default
+   to better match my site's colour palette */
 .btn:focus,
 .btn:focus-visible,
 .btn:active,
@@ -126,7 +123,7 @@ a {
   color: var(--color-text) !important;
 }
 
-/* Generic hover-darken for other clickable elements (filter tags, chips, pagination) */
+/* Darken interactable elements on hover */
 .facet-tag.selected:hover,
 .facet-tag.matched:hover,
 .pagination .page-link:hover,
@@ -324,7 +321,7 @@ a {
   color: var(--color-text);
 }
 
-/* ── Homepage white rounded section containers (per mockup) ── */
+/* ── Homepage white rounded section containers ── */
 .home-section {
   background-color: var(--color-surface-alt);
   border: 1px solid var(--color-border);
@@ -343,11 +340,11 @@ a {
 .checkout-stepper .step-line {
   width: 48px;
   height: 2px;
-  margin: 17px 0 0 0; /* aligns with the vertical centre of the 34px step-circle, no side gaps */
+  margin: 17px 0 0 0;
   flex: none;
 }
 
-/* ── Cart bounce animation (triggered when an item is added) ── */
+/* ── Cart animation ── */
 @keyframes cartPop {
   0%   { transform: scale(1); }
   25%  { transform: scale(1.35) rotate(-8deg); }
@@ -359,7 +356,7 @@ a {
   animation: cartPop 0.45s ease;
 }
 
-/* ── Price range slider thumb — orange accent ── */
+/* ── Price range slider ball ── */
 .form-range::-webkit-slider-thumb {
   background-color: var(--color-accent);
 }
@@ -373,7 +370,7 @@ a {
   background-color: var(--color-border);
 }
 
-/* ── Pagination — orange accent instead of Bootstrap blue ── */
+/* ── Pagination ── */
 .pagination .page-link {
   color: var(--color-accent);
 }

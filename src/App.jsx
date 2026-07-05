@@ -10,8 +10,6 @@ import FeedbackThanks from "./pages/FeedbackThanks";
 import Cart from "./pages/Cart";
 
 export default function App() {
-  // Lifted here (rather than inside Feedback.jsx) so a draft survives
-  // navigating away from /feedback and coming back later.
   const [feedbackDraft, setFeedbackDraft] = useState(null);
 
   return (

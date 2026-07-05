@@ -6,9 +6,7 @@ import content from "../../config/content";
 
 const EMPTY_FORM = { firstName: "", lastName: "", email: "", address: "", city: "", postal: "" };
 
-// Auto-format postal/zip as the user types: uppercase, single space
-// after 3 characters for Canadian-style codes (A1A 1A1), left as-is
-// for other formats (e.g. plain US ZIPs).
+// Auto-format postal/zip code
 function formatPostal(raw) {
   const cleaned = raw.toUpperCase().replace(/\s+/g, "");
   const looksCanadian = /^[A-Z]\d[A-Z]/.test(cleaned);
@@ -18,7 +16,7 @@ function formatPostal(raw) {
   return cleaned.slice(0, 10);
 }
 
-// Capitalizes the first letter as the user types a name/city.
+// Capitalizes the first letter as the user types a name/city
 function capitalizeWords(raw) {
   return raw.replace(/\b\w/g, (c) => c.toUpperCase());
 }

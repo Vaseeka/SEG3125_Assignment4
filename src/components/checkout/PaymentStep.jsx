@@ -5,13 +5,15 @@ import { useCart } from "../../context/CartContext";
 import ConfirmModal from "../ConfirmModal";
 import content from "../../config/content";
 
-// Groups digits into 4s: "1234567812345678" -> "1234 5678 1234 5678"
+// Groups digits into 4s: "1234567812345678" -> "1234 5678 1234 5678" 
+// (used when user is entering credit card number)
 function formatCardNumber(raw) {
   const digits = raw.replace(/\D/g, "").slice(0, 16);
   return digits.replace(/(.{4})/g, "$1 ").trim();
 }
 
 // Auto-inserts the "/" as the user types: "0828" -> "08/28"
+// (used when entering the expiry date of the card)
 function formatExpiry(raw) {
   const digits = raw.replace(/\D/g, "").slice(0, 4);
   if (digits.length <= 2) return digits;

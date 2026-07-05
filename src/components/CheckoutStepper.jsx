@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import content from "../config/content";
 
 // step: 0-indexed current step (0=Cart, 1=Details, 2=Payment, 3=Done)
-// Steps are display-only — clicking a completed step does not navigate.
 export default function CheckoutStepper({ step }) {
   const steps = content.cart.steps;
 
