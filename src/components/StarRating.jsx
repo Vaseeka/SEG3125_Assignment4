@@ -10,7 +10,7 @@ export default function StarRating({ value, onChange, max = 5 }) {
         <BsStarFill
           key={n}
           size={28}
-          color={n <= (hover || value) ? "var(--color-warning)" : "var(--color-border)"}
+          color={n <= (hover || value) ? "var(--color-accent)" : "var(--color-border)"}
           onMouseEnter={() => setHover(n)}
           onMouseLeave={() => setHover(0)}
           onClick={() => onChange(n)}

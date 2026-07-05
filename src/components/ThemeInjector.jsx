@@ -9,6 +9,8 @@ const cssVarMap = {
   darkSoft: "--color-dark-soft",
   accent: "--color-accent",
   accentDark: "--color-accent-dark",
+  cartAction: "--color-cart-action",
+  cartActionDark: "--color-cart-action-dark",
   surface: "--color-surface",
   surfaceAlt: "--color-surface-alt",
   text: "--color-text",

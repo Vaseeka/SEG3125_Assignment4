@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Container, Button } from "react-bootstrap";
-import { BsXLg } from "react-icons/bs";
+import { Container } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
 import CheckoutStepper from "../components/CheckoutStepper";
 import ConfirmModal from "../components/ConfirmModal";
@@ -37,30 +36,30 @@ export default function Cart() {
 
   return (
     <Container fluid="lg" className="py-4">
-      <div className="d-flex justify-content-between align-items-start">
-        <div>
-          <CheckoutStepper step={step} />
-          {step === 0 && <h2 className="fw-bold mb-4">{content.cart.title}</h2>}
-        </div>
-        {step > 0 && step < 3 && items.length > 0 && (
-          <Button className="btn-outline-brand px-3" onClick={() => setShowCancelConfirm(true)}>
-            {content.cart.cancel} <BsXLg />
-          </Button>
-        )}
-      </div>
+      <CheckoutStepper step={step} />
+      {step === 0 && <h2 className="fw-bold mb-4">{content.cart.title}</h2>}
 
-      {step === 0 && <CartStep onNext={() => setStep(1)} />}
-      {step === 1 && (
-        <DetailsStep
-          details={details}
-          onSubmit={handleDetailsSubmit}
-          onBack={() => setStep(0)}
-        />
-      )}
-      {step === 2 && (
-        <PaymentStep onSubmit={handlePaymentSubmit} onBack={() => setStep(1)} />
-      )}
-      {step === 3 && <ConfirmationStep order={order} />}
+      <div className="d-flex justify-content-center">
+        <div style={{ width: "100%", maxWidth: step === 0 ? 1100 : 640 }}>
+          {step === 0 && <CartStep onNext={() => setStep(1)} />}
+          {step === 1 && (
+            <DetailsStep
+              details={details}
+              onSubmit={handleDetailsSubmit}
+              onBack={() => setStep(0)}
+              onCancel={() => setShowCancelConfirm(true)}
+            />
+          )}
+          {step === 2 && (
+            <PaymentStep
+              onSubmit={handlePaymentSubmit}
+              onBack={() => setStep(1)}
+              onCancel={() => setShowCancelConfirm(true)}
+            />
+          )}
+          {step === 3 && <ConfirmationStep order={order} />}
+        </div>
+      </div>
 
       <ConfirmModal
         show={showCancelConfirm}

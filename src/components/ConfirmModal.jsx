@@ -13,10 +13,10 @@ export default function ConfirmModal({
   return (
     <Modal show={show} onHide={onCancel} centered>
       <Modal.Body className="p-4">
-        <h5 className="fw-bold text-brand mb-2">{title}</h5>
-        <p className="mb-1">{message}</p>
-        {emphasis && <p className="fw-semibold text-brand mb-3">{emphasis}</p>}
-        <div className="d-flex justify-content-end gap-2 mt-3">
+        <h5 className="fw-bold text-brand mb-2 text-center">{title}</h5>
+        <p className="mb-1 text-start">{message}</p>
+        {emphasis && <p className="fw-semibold text-brand mb-3 text-start">{emphasis}</p>}
+        <div className="d-flex justify-content-center gap-2 mt-3">
           <Button className="btn-outline-brand" onClick={onCancel}>
             {cancelText}
           </Button>

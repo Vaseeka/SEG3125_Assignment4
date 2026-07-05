@@ -1,17 +1,28 @@
 import { useRef, useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import { BsDashLg, BsPlusLg } from "react-icons/bs";
+import { BsDashLg, BsPlusLg, BsImage } from "react-icons/bs";
 import { useCart } from "../context/CartContext";
 import content from "../config/content";
 
 function headerColorFor(product) {
-  // Alternate header colours by publisher, purely visual grouping
+  // Alternate header colours by publisher, purely visual grouping.
   if (product.publisher.includes("Sega")) return "var(--color-primary-dark)";
   if (product.publisher.includes("Square Enix") && !product.publisher.includes("Nintendo")) return "#2E7DD1";
   return "var(--color-primary)";
 }
 
-export default function ProductCard({ product }) {
+// Builds the full list of facet tags this card should display:
+// franchise, every publisher, every genre, every player-count value.
+function buildTags(product) {
+  return [
+    { facet: "franchise", value: product.franchise },
+    ...product.publisher.map((v) => ({ facet: "publisher", value: v })),
+    ...product.genre.map((v) => ({ facet: "genre", value: v })),
+    ...product.players.map((v) => ({ facet: "players", value: v })),
+  ];
+}
+
+export default function ProductCard({ product, filters, onToggleFacet }) {
   const { items, addToCart, updateQty, priceOf } = useCart();
   const [editing, setEditing] = useState(false);
   const [editVal, setEditVal] = useState("");
@@ -21,6 +32,7 @@ export default function ProductCard({ product }) {
   const qty = cartLine?.qty || 0;
   const finalPrice = priceOf(product);
   const showStepper = qty > 0;
+  const tags = buildTags(product);
 
   function startEdit() {
     setEditVal(String(qty));
@@ -39,51 +51,64 @@ export default function ProductCard({ product }) {
 
   return (
     <Card className="card-elevated h-100">
-      <div
-        style={{
-          backgroundColor: headerColorFor(product),
-          color: "#fff",
-          height: 110,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div className="fw-bold fs-4">{product.code}</div>
-        <div style={{ fontSize: "0.7rem", letterSpacing: 1, opacity: 0.8 }}>
-          {product.franchise.toUpperCase()}
+      {product.image ? (
+        <img
+          src={product.image}
+          alt={product.name}
+          style={{ height: 150, width: "100%", objectFit: "cover" }}
+        />
+      ) : (
+        <div
+          style={{
+            backgroundColor: headerColorFor(product),
+            color: "#fff",
+            height: 150,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 4,
+          }}
+        >
+          {/* PLACEHOLDER: set `image` on this product in src/data/products.js
+              (e.g. image: "/games/nsmb.jpg") to replace this box with box art. */}
+          <BsImage size={22} style={{ opacity: 0.6 }} />
+          <div className="fw-bold fs-5">{product.code}</div>
+          <div style={{ fontSize: "0.65rem", letterSpacing: 1, opacity: 0.7 }}>
+            {product.franchise.toUpperCase()} · ADD IMAGE
+          </div>
         </div>
-      </div>
+      )}
       <Card.Body className="d-flex flex-column">
         <Card.Title style={{ fontSize: "1rem" }}>{product.name}</Card.Title>
+
         <div className="mb-2">
-          <span
-            className="pill-tag"
-            style={{
-              backgroundColor: "var(--color-primary-light)",
-              color: "var(--color-primary-dark)",
-            }}
-          >
-            {product.franchise}
-          </span>
-          <span
-            className="pill-tag"
-            style={{ backgroundColor: "#EEF1FB", color: "#4A5AA8" }}
-          >
-            {product.publisher.join(" / ")}
-          </span>
+          {tags.map((t) => {
+            const isSelected = filters ? filters[t.facet]?.has(t.value) : false;
+            const isFilterAware = !!filters;
+            const className =
+              "facet-tag" + (isSelected ? " selected" : isFilterAware ? " matched" : " plain");
+            return (
+              <button
+                key={t.facet + t.value}
+                type="button"
+                className={className}
+                onClick={onToggleFacet ? () => onToggleFacet(t.facet, t.value) : undefined}
+                style={{ cursor: onToggleFacet ? "pointer" : "default" }}
+                title={onToggleFacet ? `Filter by ${t.value}` : undefined}
+              >
+                {t.value}
+              </button>
+            );
+          })}
         </div>
 
         <div className="mt-auto">
           <div className="d-flex align-items-center gap-2 mb-2">
-            <span className="fw-bold fs-5">${finalPrice.toFixed(2)}</span>
+            <span className="fw-bold fs-5 text-brand">${finalPrice.toFixed(2)}</span>
             {product.discount > 0 && (
               <>
-                <span
-                  className="text-muted"
-                  style={{ textDecoration: "line-through", fontSize: "0.85rem" }}
-                >
+                <span className="text-muted" style={{ textDecoration: "line-through", fontSize: "0.85rem" }}>
                   ${product.price.toFixed(2)}
                 </span>
                 <span className="badge badge-discount">-{product.discount}%</span>
@@ -98,7 +123,7 @@ export default function ProductCard({ product }) {
           )}
 
           {!showStepper ? (
-            <Button className="btn-brand w-100" onClick={() => addToCart(product, 1)}>
+            <Button className="btn-cart w-100" onClick={() => addToCart(product, 1)}>
               {content.shop.addToCart}
             </Button>
           ) : (

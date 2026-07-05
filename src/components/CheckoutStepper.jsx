@@ -1,29 +1,30 @@
+import { Fragment } from "react";
 import content from "../config/content";
 
 // step: 0-indexed current step (0=Cart, 1=Details, 2=Payment, 3=Done)
+// Steps are display-only — clicking a completed step does not navigate.
 export default function CheckoutStepper({ step }) {
   const steps = content.cart.steps;
 
   return (
-    <div className="d-flex align-items-center mb-4" style={{ maxWidth: 480 }}>
-      {steps.map((label, i) => (
-        <div key={label} className="d-flex align-items-center flex-grow-1">
-          <div className="d-flex flex-column align-items-center">
-            <div
-              className={
-                "step-circle" +
-                (i < step ? " done" : i === step ? " active" : "")
-              }
-            >
-              {i < step ? "✓" : i + 1}
+    <div className="checkout-stepper">
+      {steps.map((label, i) => {
+        const done = i < step;
+        const active = i === step;
+        return (
+          <Fragment key={label}>
+            <div className="d-flex flex-column align-items-center" style={{ minWidth: 64 }}>
+              <div className={"step-circle" + (done ? " done" : active ? " active" : "")}>
+                {done ? "✓" : i + 1}
+              </div>
+              <div className={"step-label" + (active ? " active" : done ? " done" : "")}>{label}</div>
             </div>
-            <div className={"step-label" + (i === step ? " active" : "")}>{label}</div>
-          </div>
-          {i < steps.length - 1 && (
-            <div className={"step-line" + (i < step ? " done" : "")} />
-          )}
-        </div>
-      ))}
+            {i < steps.length - 1 && (
+              <div className={"step-line" + (done ? " done" : "")} />
+            )}
+          </Fragment>
+        );
+      })}
     </div>
   );
 }

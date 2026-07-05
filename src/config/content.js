@@ -1,3 +1,9 @@
+// ============================================================
+// CONTENT CONFIG
+// All user-facing copy lives here so it's easy to rewrite
+// without touching component code. Organised by page/section.
+// ============================================================
+
 export const content = {
   siteName: "New Sale",
 
@@ -40,9 +46,10 @@ export const content = {
     franchise: "Franchise",
     genre: "Genre",
     players: "No. of players",
-    maxPrice: "MAX PRICE",
+    maxPrice: "Max price",
     addToCart: "Add to cart",
-    resultsLabel: (shown, total) => `Showing ${shown} out of ${total} results`,
+    resultsLabel: (start, end, total) =>
+      total === 0 ? "No results" : `Showing ${start}-${end} of ${total} results`,
   },
 
   feedback: {

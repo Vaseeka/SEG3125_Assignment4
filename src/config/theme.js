@@ -1,3 +1,11 @@
+// ============================================================
+// THEME CONFIG
+// Edit these values to change the entire site's colour scheme.
+// Every component reads colours from here (via CSS variables
+// injected in src/index.css at runtime) — nothing is hard-coded
+// in the components themselves.
+// ============================================================
+
 export const theme = {
   colors: {
     // Core brand colours
@@ -8,8 +16,11 @@ export const theme = {
     dark: "#121212",           // navbar / hero / footer background
     darkSoft: "#1E1E1E",       // secondary dark surface
 
-    accent: "#D96B00",         // orange — quantity steppers & active filter chips
-    accentDark: "#B85900",
+    accent: "#FF7A00",         // bright orange — quantity steppers, active filter chips, feedback stars
+    accentDark: "#E56A00",
+
+    cartAction: "#E6398C",     // bright pink — "Add to cart" button, distinct from nav buttons
+    cartActionDark: "#C22C74",
 
     surface: "#F4F4F4",        // page background
     surfaceAlt: "#FFFFFF",     // card background
@@ -19,7 +30,7 @@ export const theme = {
     textOnDark: "#FFFFFF",     // text on dark backgrounds
 
     success: "#3BAA5C",
-    warning: "#F5C344",
+    warning: "#FFD400",
     border: "#E4E4E4",
 
     // Category tag colours (used for Franchise / Publisher pills)

@@ -1,21 +1,22 @@
 import { useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Container, Row, Col, Pagination } from "react-bootstrap";
-import products from "../data/products";
+import products, { PRICE_MIN, PRICE_MAX } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import FacetedSidebar from "../components/FacetedSidebar";
 import content from "../config/content";
 
 const PAGE_SIZE = 6;
-const MIN_PRICE = Math.min(...products.map((p) => p.price));
-const MAX_PRICE = Math.ceil(Math.max(...products.map((p) => p.price)));
 
 export default function Shop() {
+  const location = useLocation();
   const [filters, setFilters] = useState({
     publisher: new Set(),
     franchise: new Set(),
     genre: new Set(),
     players: new Set(),
-    maxPrice: MAX_PRICE,
+    maxPrice: PRICE_MAX,
+    onSale: !!location.state?.onSaleOnly,
   });
   const [page, setPage] = useState(1);
 
@@ -26,6 +27,7 @@ export default function Shop() {
       if (filters.genre.size && !p.genre.some((v) => filters.genre.has(v))) return false;
       if (filters.players.size && !p.players.some((v) => filters.players.has(v))) return false;
       if (p.price > filters.maxPrice) return false;
+      if (filters.onSale && !(p.discount > 0)) return false;
       return true;
     });
   }, [filters]);
@@ -36,10 +38,20 @@ export default function Shop() {
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE
   );
+  const rangeStart = filtered.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(currentPage * PAGE_SIZE, filtered.length);
 
   function handleSetFilters(update) {
     setFilters(update);
     setPage(1);
+  }
+
+  function toggleFacetFromCard(facet, value) {
+    handleSetFilters((prev) => {
+      const next = new Set(prev[facet]);
+      next.has(value) ? next.delete(value) : next.add(value);
+      return { ...prev, [facet]: next };
+    });
   }
 
   return (
@@ -50,18 +62,23 @@ export default function Shop() {
           <FacetedSidebar
             filters={filters}
             setFilters={handleSetFilters}
-            minPrice={MIN_PRICE}
-            maxPriceBound={MAX_PRICE}
+            minPrice={PRICE_MIN}
+            maxPriceBound={PRICE_MAX}
           />
         </Col>
         <Col md={9}>
           {pageItems.length === 0 ? (
-            <p className="text-muted">No games match your filters yet — try clearing a few.</p>
+            <div
+              className="d-flex align-items-center justify-content-center text-center text-muted"
+              style={{ minHeight: 320 }}
+            >
+              <p className="mb-0">No games match your filters yet — try clearing a few.</p>
+            </div>
           ) : (
             <Row className="g-4">
               {pageItems.map((p) => (
                 <Col key={p.id} sm={6} lg={4}>
-                  <ProductCard product={p} />
+                  <ProductCard product={p} filters={filters} onToggleFacet={toggleFacetFromCard} />
                 </Col>
               ))}
             </Row>
@@ -69,7 +86,7 @@ export default function Shop() {
 
           <div className="d-flex justify-content-between align-items-center mt-4">
             <span className="text-muted small">
-              {content.shop.resultsLabel(pageItems.length, filtered.length)}
+              {content.shop.resultsLabel(rangeStart, rangeEnd, filtered.length)}
             </span>
             <Pagination>
               <Pagination.Prev

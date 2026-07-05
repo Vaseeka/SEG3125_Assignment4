@@ -8,6 +8,7 @@ export default function ConfirmationStep({ order }) {
   if (!order) return null;
 
   return (
+    <>
     <Card className="card-elevated p-4 text-center" style={{ maxWidth: 640 }}>
       <BsCheckCircleFill size={56} color="var(--color-success)" className="mx-auto mb-3" />
       <h3 className="fw-bold">{t.title}</h3>
@@ -21,7 +22,10 @@ export default function ConfirmationStep({ order }) {
             : product.price;
           return (
             <div key={product.id} className="d-flex justify-content-between small mb-1">
-              <span>{product.name}{qty > 1 ? ` x${qty}` : ""}</span>
+              <span>
+                {product.name}
+                {qty > 1 ? ` x${qty}` : ""}
+              </span>
               <span>${(unitPrice * qty).toFixed(2)}</span>
             </div>
           );
@@ -46,8 +50,19 @@ export default function ConfirmationStep({ order }) {
         {t.steps.map((step, i) => (
           <div key={step} className="d-flex align-items-center gap-2 mb-2">
             <span
-              className="step-circle done"
-              style={{ width: 24, height: 24, fontSize: "0.7rem" }}
+              style={{
+                width: 24,
+                height: 24,
+                fontSize: "0.7rem",
+                borderRadius: "50%",
+                background: "var(--color-primary-light)",
+                color: "var(--color-primary-dark)",
+                fontWeight: 700,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
             >
               {i + 1}
             </span>
@@ -55,17 +70,18 @@ export default function ConfirmationStep({ order }) {
           </div>
         ))}
       </div>
-
-      <p className="text-muted small mt-3">{t.beforeYouGo}</p>
-
-      <div className="d-flex justify-content-center gap-3 mt-2 flex-wrap">
-        <Button as={Link} to="/" className="btn-outline-brand px-4">
-          {t.goHome}
-        </Button>
-        <Button as={Link} to="/feedback" className="btn-brand px-4">
-          {t.fillSurvey}
-        </Button>
-      </div>
     </Card>
+
+    <p className="text-muted small text-center mt-4 mb-2">{t.beforeYouGo}</p>
+
+    <div className="d-flex justify-content-center gap-3 mt-2 flex-wrap">
+      <Button as={Link} to="/" className="btn-outline-brand px-4">
+        {t.goHome}
+      </Button>
+      <Button as={Link} to="/feedback" className="btn-brand px-4">
+        {t.fillSurvey}
+      </Button>
+    </div>
+    </>
   );
 }

@@ -19,7 +19,8 @@ export default function CartStep({ onNext }) {
   }
 
   return (
-    <Row className="g-4">
+    <>
+      <Row className="g-4">
       <Col md={8}>
         {items.map(({ product, qty }) => {
           const price = priceOf(product);
@@ -45,7 +46,7 @@ export default function CartStep({ onNext }) {
                 <div className="flex-grow-1">
                   <div className="fw-semibold">{product.name}</div>
                   <div className="text-muted small">
-                    {product.publisher.join(" / ")} · {product.franchise}
+                    {[product.franchise, ...product.publisher, ...product.genre, ...product.players].join(" · ")}
                   </div>
                 </div>
                 <div className="qty-stepper">
@@ -105,5 +106,6 @@ export default function CartStep({ onNext }) {
         </Card>
       </Col>
     </Row>
+    </>
   );
 }

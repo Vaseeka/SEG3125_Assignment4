@@ -1,13 +1,17 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { BsEnvelopeFill, BsTelephoneFill, BsArrowRight } from "react-icons/bs";
-import products from "../data/products";
+import { BsArrowRight, BsImage } from "react-icons/bs";
+import products, { POPULAR_GAME_IDS } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import content from "../config/content";
 
+// PLACEHOLDER: set this to an image path (e.g. "/hero.jpg" from /public)
+// or a full URL to replace the hero placeholder box below.
+const HERO_IMAGE = null;
+
 export default function Home() {
   const deals = products.filter((p) => p.discount > 0).slice(0, 3);
-  const popular = products.slice(3, 6);
+  const popular = POPULAR_GAME_IDS.map((id) => products.find((p) => p.id === id)).filter(Boolean);
 
   return (
     <>
@@ -25,93 +29,85 @@ export default function Home() {
               </Button>
             </Col>
             <Col md={6}>
-              <div
-                style={{
-                  height: 220,
-                  borderRadius: "var(--radius-lg)",
-                  background:
-                    "linear-gradient(135deg, var(--color-dark-soft), var(--color-primary-dark))",
-                }}
-                className="d-flex align-items-center justify-content-center text-white fw-bold"
-              >
-                DS Game Cartridges
-              </div>
+              {HERO_IMAGE ? (
+                <img
+                  src={HERO_IMAGE}
+                  alt="Nintendo DS games"
+                  style={{ width: "100%", height: 220, objectFit: "cover", borderRadius: "var(--radius-lg)" }}
+                />
+              ) : (
+                <div
+                  style={{
+                    height: 220,
+                    borderRadius: "var(--radius-lg)",
+                    background:
+                      "linear-gradient(135deg, var(--color-dark-soft), var(--color-primary-dark))",
+                  }}
+                  className="d-flex flex-column align-items-center justify-content-center text-white fw-bold gap-2"
+                >
+                  {/* PLACEHOLDER: set HERO_IMAGE above to replace this box with a photo */}
+                  <BsImage size={26} style={{ opacity: 0.6 }} />
+                  <span>ADD HERO IMAGE</span>
+                </div>
+              )}
             </Col>
           </Row>
         </Container>
       </section>
 
-      {/* Deals */}
+      {/* Deals + Popular */}
       <section className="py-5">
         <Container fluid="lg">
-          <h3 className="fw-bold mb-4">
-            {content.home.dealsTitle}
-            <span className="text-brand">{content.home.dealsHighlight}</span>
-          </h3>
-          <Row className="g-4">
-            {deals.map((p) => (
-              <Col key={p.id} sm={6} md={4}>
-                <ProductCard product={p} />
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
-
-      {/* Popular */}
-      <section className="py-4">
-        <Container fluid="lg">
-          <h3 className="fw-bold mb-4">
-            {content.home.popularTitle}
-            <span className="text-brand">{content.home.popularHighlight}</span>
-          </h3>
-          <Row className="g-4">
-            {popular.map((p) => (
-              <Col key={p.id} sm={6} md={4}>
-                <ProductCard product={p} />
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
-
-      {/* Feedback banner */}
-      <section className="bg-brand-dark text-white py-5 mt-4">
-        <Container fluid="lg">
-          <Row className="align-items-center g-4">
-            <Col md={7}>
-              <h3 className="fw-bold text-brand">{content.home.feedbackBanner.title}</h3>
-              <p className="mb-3">{content.home.feedbackBanner.body}</p>
-              <Button as={Link} to="/feedback" className="btn-brand px-4">
-                {content.home.feedbackBanner.cta} <BsArrowRight />
+          <div className="home-section">
+            <div className="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+              <h3 className="fw-bold mb-0">
+                {content.home.dealsTitle}
+                <span className="text-brand">{content.home.dealsHighlight}</span>
+              </h3>
+              <Button
+                as={Link}
+                to="/shop"
+                state={{ onSaleOnly: true }}
+                className="btn-brand px-3"
+              >
+                See other deals <BsArrowRight />
               </Button>
-            </Col>
-            <Col md={5} className="text-center">
-              <div style={{ fontSize: "4rem" }}>🙂</div>
-            </Col>
-          </Row>
+            </div>
+            <Row className="g-4">
+              {deals.map((p) => (
+                <Col key={p.id} sm={6} md={4}>
+                  <ProductCard product={p} />
+                </Col>
+              ))}
+            </Row>
+          </div>
+
+          <div className="home-section mb-0">
+            <h3 className="fw-bold mb-4">
+              {content.home.popularTitle}
+              <span className="text-brand">{content.home.popularHighlight}</span>
+            </h3>
+            <Row className="g-4">
+              {popular.map((p) => (
+                <Col key={p.id} sm={6} md={4}>
+                  <ProductCard product={p} />
+                </Col>
+              ))}
+            </Row>
+          </div>
         </Container>
       </section>
 
-      {/* Contact */}
+      {/* Feedback banner — centered text, no image */}
       <section className="bg-brand-dark text-white py-5">
-        <Container fluid="lg">
-          <Row className="g-4">
-            <Col md={6}>
-              <h4 className="fw-bold text-brand">{content.home.contact.title}</h4>
-              <p className="mb-1">{content.home.contact.subtitle}</p>
-            </Col>
-            <Col md={6}>
-              <div className="d-flex align-items-center gap-2 mb-2">
-                <BsEnvelopeFill className="text-brand" />
-                <span>{content.home.contact.email}</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <BsTelephoneFill className="text-brand" />
-                <span>{content.home.contact.phone}</span>
-              </div>
-            </Col>
-          </Row>
+        <Container fluid="lg" className="text-center">
+          <div className="mx-auto" style={{ maxWidth: 560 }}>
+            <h3 className="fw-bold text-brand">{content.home.feedbackBanner.title}</h3>
+            <p className="mb-4">{content.home.feedbackBanner.body}</p>
+            <Button as={Link} to="/feedback" className="btn-brand px-4">
+              {content.home.feedbackBanner.cta} <BsArrowRight />
+            </Button>
+          </div>
         </Container>
       </section>
     </>

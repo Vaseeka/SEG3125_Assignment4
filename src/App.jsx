@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import ThemeInjector from "./components/ThemeInjector";
 import SiteNavbar from "./components/SiteNavbar";
-import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
@@ -10,6 +10,10 @@ import FeedbackThanks from "./pages/FeedbackThanks";
 import Cart from "./pages/Cart";
 
 export default function App() {
+  // Lifted here (rather than inside Feedback.jsx) so a draft survives
+  // navigating away from /feedback and coming back later.
+  const [feedbackDraft, setFeedbackDraft] = useState(null);
+
   return (
     <CartProvider>
       <ThemeInjector />
@@ -19,12 +23,20 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop />} />
-            <Route path="/feedback" element={<Feedback />} />
+            <Route
+              path="/feedback"
+              element={
+                <Feedback
+                  draft={feedbackDraft}
+                  onSaveDraft={setFeedbackDraft}
+                  onSubmitted={() => setFeedbackDraft(null)}
+                />
+              }
+            />
             <Route path="/feedback/thanks" element={<FeedbackThanks />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>
         </main>
-        <Footer />
       </div>
     </CartProvider>
   );

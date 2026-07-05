@@ -1,35 +1,86 @@
 import { useState } from "react";
 import { Card, Form, Row, Col, Button } from "react-bootstrap";
-import { BsArrowLeft, BsArrowRight, BsLockFill } from "react-icons/bs";
+import { BsArrowLeft, BsArrowRight, BsLockFill, BsXLg } from "react-icons/bs";
 import { useCart } from "../../context/CartContext";
+import ConfirmModal from "../ConfirmModal";
 import content from "../../config/content";
 
-export default function PaymentStep({ onSubmit, onBack }) {
+// Groups digits into 4s: "1234567812345678" -> "1234 5678 1234 5678"
+function formatCardNumber(raw) {
+  const digits = raw.replace(/\D/g, "").slice(0, 16);
+  return digits.replace(/(.{4})/g, "$1 ").trim();
+}
+
+// Auto-inserts the "/" as the user types: "0828" -> "08/28"
+function formatExpiry(raw) {
+  const digits = raw.replace(/\D/g, "").slice(0, 4);
+  if (digits.length <= 2) return digits;
+  return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+}
+
+function formatCvv(raw) {
+  return raw.replace(/\D/g, "").slice(0, 4);
+}
+
+function capitalizeWords(raw) {
+  return raw.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+const EMPTY_FORM = { nameOnCard: "", cardNumber: "", expiry: "", cvv: "" };
+
+export default function PaymentStep({ onSubmit, onBack, onCancel }) {
   const { items, priceOf, subtotal, shipping, total } = useCart();
-  const [form, setForm] = useState({
-    nameOnCard: "",
-    cardNumber: "",
-    expiry: "",
-    cvv: "",
-  });
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [errors, setErrors] = useState({});
+  const [showBackConfirm, setShowBackConfirm] = useState(false);
+  const [showPayConfirm, setShowPayConfirm] = useState(false);
+
+  const hasProgress = Object.values(form).some((v) => v.trim());
+  const allFilled =
+    form.nameOnCard.trim() && form.cardNumber.trim() && form.expiry.trim() && form.cvv.trim();
 
   function update(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
+  function validate() {
+    const e = {};
+    if (!form.nameOnCard.trim()) e.nameOnCard = "Name on card is required";
+    if (form.cardNumber.replace(/\s/g, "").length !== 16) e.cardNumber = "Enter a valid 16-digit card number";
+    if (!/^\d{2}\/\d{2}$/.test(form.expiry)) e.expiry = "Format: MM/YY";
+    if (form.cvv.length < 3) e.cvv = "3-4 digits required";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    onSubmit(form);
+    if (validate()) setShowPayConfirm(true);
+  }
+
+  function handleBackClick() {
+    if (hasProgress) setShowBackConfirm(true);
+    else onBack();
   }
 
   const t = content.cart.payment;
 
   return (
-    <Card className="card-elevated p-4" style={{ maxWidth: 640 }}>
-      <div className="mb-3">
+    <>
+      <div className="d-flex justify-content-between align-items-center mb-4" style={{ maxWidth: 560, marginInline: "auto" }}>
+        <h2 className="fw-bold mb-0">{t.title}</h2>
+        <Button className="btn-outline-brand px-3" onClick={onCancel}>
+          {content.cart.cancel} <BsXLg />
+        </Button>
+      </div>
+
+      <Card className="card-elevated p-4 mx-auto mb-3" style={{ maxWidth: 560 }}>
         {items.map(({ product, qty }) => (
           <div key={product.id} className="d-flex justify-content-between small mb-1">
-            <span className="text-brand fw-semibold">{product.name}{qty > 1 ? ` x${qty}` : ""}</span>
+            <span className="fw-semibold">
+              {product.name}
+              {qty > 1 ? ` x${qty}` : ""}
+            </span>
             <span>${(priceOf(product) * qty).toFixed(2)}</span>
           </div>
         ))}
@@ -44,64 +95,104 @@ export default function PaymentStep({ onSubmit, onBack }) {
         </div>
         <hr />
         <div className="d-flex justify-content-between fw-bold fs-5">
-          <span>{t.title}</span>
+          <span>{content.cart.totalDue}</span>
           <span className="text-brand">${total.toFixed(2)}</span>
         </div>
-      </div>
+      </Card>
 
-      <div className="d-flex align-items-center gap-2 text-muted small mb-3">
-        <BsLockFill /> {t.secureNote}
-      </div>
-
-      <Form onSubmit={handleSubmit}>
-        <Row className="g-3">
-          <Col md={12}>
-            <Form.Label>{t.nameOnCard}</Form.Label>
-            <Form.Control
-              required
-              placeholder="Jane Smith"
-              value={form.nameOnCard}
-              onChange={(e) => update("nameOnCard", e.target.value)}
-            />
-          </Col>
-          <Col md={12}>
-            <Form.Label>{t.cardNumber}</Form.Label>
-            <Form.Control
-              required
-              placeholder="1234 5678 9012 3456"
-              value={form.cardNumber}
-              onChange={(e) => update("cardNumber", e.target.value)}
-            />
-          </Col>
-          <Col md={6}>
-            <Form.Label>{t.expiry}</Form.Label>
-            <Form.Control
-              required
-              placeholder="08/28"
-              value={form.expiry}
-              onChange={(e) => update("expiry", e.target.value)}
-            />
-          </Col>
-          <Col md={6}>
-            <Form.Label>{t.cvv}</Form.Label>
-            <Form.Control
-              required
-              placeholder="123"
-              value={form.cvv}
-              onChange={(e) => update("cvv", e.target.value)}
-            />
-          </Col>
-        </Row>
-
-        <div className="d-flex justify-content-between mt-4">
-          <Button type="button" className="btn-outline-brand px-4" onClick={onBack}>
-            <BsArrowLeft /> {content.cart.goBack}
-          </Button>
-          <Button type="submit" className="btn-brand px-4">
-            {t.pay(total.toFixed(2))} <BsArrowRight />
-          </Button>
+      <Card className="card-elevated p-4 mx-auto" style={{ maxWidth: 560 }}>
+        <div className="d-flex align-items-center gap-2 text-muted small mb-3">
+          <BsLockFill /> {t.secureNote}
         </div>
-      </Form>
-    </Card>
+
+        <Form onSubmit={handleSubmit} noValidate>
+          <Row className="g-3">
+            <Col md={12}>
+              <Form.Label>{t.nameOnCard}</Form.Label>
+              <Form.Control
+                placeholder="Jane Smith"
+                value={form.nameOnCard}
+                isInvalid={!!errors.nameOnCard}
+                onChange={(e) => update("nameOnCard", capitalizeWords(e.target.value))}
+              />
+              <Form.Control.Feedback type="invalid">{errors.nameOnCard}</Form.Control.Feedback>
+            </Col>
+            <Col md={12}>
+              <Form.Label>{t.cardNumber}</Form.Label>
+              <Form.Control
+                placeholder="1234 5678 9012 3456"
+                value={form.cardNumber}
+                isInvalid={!!errors.cardNumber}
+                onChange={(e) => update("cardNumber", formatCardNumber(e.target.value))}
+              />
+              <Form.Control.Feedback type="invalid">{errors.cardNumber}</Form.Control.Feedback>
+            </Col>
+            <Col md={6}>
+              <Form.Label>{t.expiry}</Form.Label>
+              <Form.Control
+                placeholder="08/28"
+                value={form.expiry}
+                isInvalid={!!errors.expiry}
+                onChange={(e) => update("expiry", formatExpiry(e.target.value))}
+              />
+              <Form.Control.Feedback type="invalid">{errors.expiry}</Form.Control.Feedback>
+            </Col>
+            <Col md={6}>
+              <Form.Label>{t.cvv}</Form.Label>
+              <Form.Control
+                placeholder="123"
+                type="password"
+                value={form.cvv}
+                isInvalid={!!errors.cvv}
+                onChange={(e) => update("cvv", formatCvv(e.target.value))}
+              />
+              <Form.Control.Feedback type="invalid">{errors.cvv}</Form.Control.Feedback>
+            </Col>
+          </Row>
+
+          <div className="d-flex justify-content-between mt-4">
+            <Button type="button" className="btn-outline-brand px-4" onClick={handleBackClick}>
+              <BsArrowLeft /> {content.cart.goBack}
+            </Button>
+            <Button type="submit" className={allFilled ? "btn-brand px-4" : "px-4"} variant={allFilled ? undefined : "secondary"} disabled={!allFilled}>
+              {allFilled ? (
+                <>
+                  {t.pay(total.toFixed(2))} <BsArrowRight />
+                </>
+              ) : (
+                "Fill out all info to continue"
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Card>
+
+      <ConfirmModal
+        show={showBackConfirm}
+        message="Are you sure you want to go back and edit your details?"
+        emphasis="Your payment information will need to be re-entered."
+        confirmText="Yes, go back"
+        cancelText="No, stay here"
+        onConfirm={() => {
+          setShowBackConfirm(false);
+          onBack();
+        }}
+        onCancel={() => setShowBackConfirm(false)}
+      />
+
+      <ConfirmModal
+        show={showPayConfirm}
+        title="Confirm payment"
+        message={`You're about to pay $${total.toFixed(2)} for your order.`}
+        emphasis="Make sure everything looks right — this can't be undone once submitted."
+        confirmText="Yes, pay now"
+        cancelText="No, let me check"
+        onConfirm={() => {
+          setShowPayConfirm(false);
+          onSubmit(form);
+        }}
+        onCancel={() => setShowPayConfirm(false)}
+      />
+    </>
   );
 }
