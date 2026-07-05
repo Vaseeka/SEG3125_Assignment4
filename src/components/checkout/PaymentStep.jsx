@@ -171,8 +171,8 @@ export default function PaymentStep({ onSubmit, onBack, onCancel }) {
 
       <ConfirmModal
         show={showBackConfirm}
-        message="Are you sure you want to go back and edit your personal information?"
-        emphasis="Your payment information will not be saved and will need to be re-entered when you return."
+        message="Are you sure you want to go back and edit your personal info?"
+        emphasis="Your payment info will not be saved and will need to be re-entered when you return."
         confirmText="Yes, I'll go back"
         cancelText="No, I'll stay here"
         onConfirm={() => {

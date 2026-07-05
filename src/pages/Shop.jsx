@@ -80,7 +80,7 @@ export default function Shop() {
               className="d-flex align-items-center justify-content-center text-center text-muted"
               style={{ minHeight: 320 }}
             >
-              <p className="mb-0">No games match your filters yet — try clearing a few.</p>
+              <p className="mb-0">We don't seem to have any games that match the selected filters. Try clearing a few of them.</p>
             </div>
           ) : (
             <Row className="g-4">
