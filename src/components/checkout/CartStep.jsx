@@ -27,22 +27,38 @@ export default function CartStep({ onNext }) {
           return (
             <Card key={product.id} className="card-elevated mb-3">
               <Card.Body className="d-flex align-items-center gap-3">
-                <div
-                  style={{
-                    width: 56,
-                    height: 56,
-                    borderRadius: "var(--radius-sm)",
-                    background: "var(--color-primary)",
-                    color: "#fff",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: 700,
-                    fontSize: "0.7rem",
-                  }}
-                >
-                  {product.code}
-                </div>
+                {product.image ? (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{
+                      width: 56,
+                      height: 56,
+                      borderRadius: "var(--radius-sm)",
+                      objectFit: "contain",
+                      backgroundColor: "var(--color-surface-alt)",
+                      flexShrink: 0,
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: 56,
+                      height: 56,
+                      borderRadius: "var(--radius-sm)",
+                      background: "var(--color-primary)",
+                      color: "#fff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontWeight: 700,
+                      fontSize: "0.7rem",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {product.code}
+                  </div>
+                )}
                 <div className="flex-grow-1">
                   <div className="fw-semibold">{product.name}</div>
                   <div className="text-muted small">
